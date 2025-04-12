@@ -18,6 +18,8 @@ func Gemini(message string) (string, error) {
 	defer client.Close()
 
 	model := client.GenerativeModel("gemini-1.5-flash")
+	model.SetTemperature(0.9)
+	model.SetTopK(1)
 
 	response, err := model.GenerateContent(ctx, genai.Text(message))
 	if err != nil {
