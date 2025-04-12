@@ -10,6 +10,7 @@ import (
 	"github.com/charmbracelet/glamour"
 
 	"github.com/LeonibelDev/gemini-api-console/internal/service"
+	"github.com/LeonibelDev/gemini-api-console/internal/utility"
 	"github.com/joho/godotenv"
 )
 
@@ -19,7 +20,7 @@ func chat(reader *bufio.Reader) {
 	chatHistory = append(chatHistory, "System: You are a helpful AI assistant. Keep track of the conversation and respond accordingly.")
 
 	// Get user input
-	fmt.Print("> ")
+	fmt.Print("$> ")
 	message, err := reader.ReadString('\n')
 	if err != nil {
 		fmt.Println("Error reading input:", err)
@@ -33,6 +34,7 @@ func chat(reader *bufio.Reader) {
 
 	// Check if the user wants to exit
 	if strings.ToLower(message) == "exit" {
+		utility.ClearConsole()
 		os.Exit(0)
 	}
 
@@ -77,6 +79,9 @@ func printResponse(markdown string) {
 }
 
 func main() {
+	// Clear console
+	utility.ClearConsole()
+
 	// Load environment variables from .env file
 	if err := godotenv.Load("config/.env"); err != nil {
 		fmt.Println("Error loading .env file")
