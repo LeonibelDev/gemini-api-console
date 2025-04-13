@@ -12,7 +12,11 @@ import (
 	"github.com/LeonibelDev/gemini-api-console/internal/service"
 	"github.com/LeonibelDev/gemini-api-console/internal/utility"
 	"github.com/joho/godotenv"
+
+	_ "embed"
 )
+
+// Embed files
 
 var chatHistory []string
 
@@ -83,8 +87,10 @@ func main() {
 	utility.ClearConsole()
 
 	// Load environment variables from .env file
-	if err := godotenv.Load("config/.env"); err != nil {
-		fmt.Println("Error loading .env file")
+	if os.Getenv("GEMINI_API_KEY") == "" {
+		if err := godotenv.Load("../../config/.env"); err != nil {
+			fmt.Println("Error loading .env file")
+		}
 	}
 
 	reader := bufio.NewReader(os.Stdin)
