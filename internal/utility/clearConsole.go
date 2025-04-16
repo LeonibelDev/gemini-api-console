@@ -12,10 +12,12 @@ func ClearConsole() {
 		cmd := exec.Command("cls")
 		cmd.Stdout = os.Stdout
 		cmd.Run()
-	} else {
-		cmd := exec.Command("clear")
-		cmd.Stdout = os.Stdout
-		cmd.Run()
+
+		return
 	}
+
+	cmd := exec.Command("clear")
+	cmd.Stdout = os.Stdout
+	cmd.Run()
 
 }
