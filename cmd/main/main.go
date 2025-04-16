@@ -93,6 +93,9 @@ func main() {
 		}
 	}
 
+	utility.SaveAPIKEY()
+
+	// User funtionality
 	reader := bufio.NewReader(os.Stdin)
 
 	fmt.Println("Welcome to the Gemini API Console! Type 'exit' to quit.")
