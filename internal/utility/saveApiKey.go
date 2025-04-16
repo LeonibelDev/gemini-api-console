@@ -32,4 +32,5 @@ func SaveAPIKEY() {
 		fmt.Println("Error to set env:", err)
 	}
 
+	ClearConsole()
 }

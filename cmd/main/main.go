@@ -12,8 +12,6 @@ import (
 	"github.com/LeonibelDev/gemini-api-console/internal/service"
 	"github.com/LeonibelDev/gemini-api-console/internal/utility"
 	"github.com/joho/godotenv"
-
-	_ "embed"
 )
 
 // Embed files
@@ -24,7 +22,7 @@ func chat(reader *bufio.Reader) {
 	chatHistory = append(chatHistory, "System: You are a helpful AI assistant. Keep track of the conversation and respond accordingly.")
 
 	// Get user input
-	fmt.Print("$> ")
+	fmt.Print("➜ ")
 	message, err := reader.ReadString('\n')
 	if err != nil {
 		fmt.Println("Error reading input:", err)
@@ -49,10 +47,11 @@ func chat(reader *bufio.Reader) {
 	response, err := service.Gemini(fullPromp)
 	if err != nil {
 		fmt.Println("Error:", err)
-	} else {
-		chatHistory = append(chatHistory, "Gemini: "+response)
-		printResponse(response)
+		return
 	}
+
+	chatHistory = append(chatHistory, "Gemini: "+response)
+	printResponse(response)
 
 }
 
@@ -87,10 +86,9 @@ func main() {
 	utility.ClearConsole()
 
 	// Load environment variables from .env file
-	if os.Getenv("GEMINI_API_KEY") == "" {
-		if err := godotenv.Load("../../config/.env"); err != nil {
-			fmt.Println("Error loading .env file")
-		}
+
+	if err := godotenv.Load("../../config/.env"); err != nil {
+		fmt.Println("Error loading .env file")
 	}
 
 	utility.SaveAPIKEY()
